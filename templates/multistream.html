@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>YouTube MultiStream</title>
+    <link rel="icon" href="../static/img/favicon.ico">
+    <link rel="stylesheet" href="../static/css/stylesheet.css">
+    <meta name="og:title" property="og:title" content="YouTube MultiStream">
+    <meta name="og:description" property="og:description"
+          content="A simple website that allows you to watch multiple YouTube streams at one time.">
+    <meta name="og:url" property="og:url" content="https://yt.thomp.site/"/>
+    <meta name="og:image" property="og:image" content="img/youtube-logo.png"/>
+    <meta name="description" content="A simple website that allows you to watch multiple YouTube streams at one time.">
+    <meta name="keywords" content="youtube multistream, youtube, multistream, stream, streaming">
+    <meta name="author" content="Alexandre Hbn relived by Ryan Thompson">
+    <meta name="theme-color" content="#ff0000">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8528BHPR1K"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8528BHPR1K');
+
+    </script>
+</head>
+{% set multistream = "multistream-" ~idlist_length %}
+{% set player = "player-" ~idlist_length %}
+{% set main = "main-" ~idlist_length %}
+
+
+<main id="{{ main }}">
+    {% set mid = (idlist|length / 2) | round(0, 'ceil') | int %}
+    {% if idlist_length > 2 %}
+    <section id="top">
+        {% for i in idlist[:mid] %}
+            {% set url = "https://www.youtube.com/embed/" ~ i %}
+            <section id="{{ multistream }}">
+                <iframe class="{{ player }}" src="{{ url }}" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </section>
+        {% endfor %}
+    </section>
+<!-- only add a bottom for the last 2 or if it's greater than 2-->
+    <section id="bottom">
+        {% for i in idlist[mid:] %}
+            {% set url = "https://www.youtube.com/embed/" ~ i %}
+            <section id="{{ multistream }}">
+                <iframe class="{{ player }}" src="{{ url }}" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        ></iframe>
+
+            </section>
+        {% endfor %}
+    </section>
+    {% elif idlist_length <= 2 %}
+    {% for i in idlist %}
+            {% set url = "https://www.youtube.com/embed/" ~ i %}
+            <section id="{{ multistream }}">
+                <iframe class="{{ player }}" src="{{ url }}" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; allow"
+                        ></iframe>
+            </section>
+        {% endfor %}
+    {% endif %}
+</main>
