@@ -1,0 +1,1 @@
+User-agent: * Allow: / Sitemap: https://yt.thomp.site/sitemap.xml

@@ -1,9 +1,20 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_from_directory
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 url_list = []
 id_list = []
 
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory(app.static_folder, 'robots.txt')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(app.static_folder, 'sitemap.xml')
+
+@app.route('/preview.png')
+def preview():
+    return send_from_directory(app.static_folder, 'preview.png')
 
 @app.route('/')
 def index():
